@@ -14,19 +14,11 @@ args = vars(ap.parse_args())
 print("[INFO] Starting video stream...")
 vs = VideoStream(src=0).start()
 
-#vs = cv2.VideoCapture(0)
-#time.sleep(2.0)
-
 csv = open(args["output"], "w")
 found = set()
 
 while(True):
 	frame = vs.read()
-	#frame = imutils.resize(frame, width=400)
-	#gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    # Display the resulting frame
-	
 	barcodes = pyzbar.decode(frame)
 	for barcode in barcodes:
 		(x,y,w,h) = barcode.rect
@@ -44,7 +36,6 @@ while(True):
 
 	cv2.imshow('frame',frame)	
 	key = cv2.waitKey(1) & 0xFF
-
 	if key == ord("q"):
 		break
 print("[INFO] cleaning up...")
