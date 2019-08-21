@@ -1,0 +1,8 @@
+prefix=/home/tania/catkin_ws/src/drone_application/devel
+
+Name: drone_application
+Description: Description of drone_application
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/tania/catkin_ws/src/drone_application/devel/lib 
+Requires: 

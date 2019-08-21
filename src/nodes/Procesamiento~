@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+import rospy
+import time
+from std_msgs.msg import String
+from std_msgs.msg import Empty
+
+status = "null"
+
+def Test():
+	Publisher('Instruction',"takeoff")
+	time.sleep(10)
+	Publisher('Instruction',"forward")
+	time.sleep(0.5)
+	Publisher('Instruction',"land")
+#######################################################
+
+def listener():
+	rospy.Subscriber('Percept', String, Listen)
+	print("[PROC] Listener started")
+	rospy.spin()
+
+def Listen(msg):
+	status = msg
+
+def Publisher(topic,Msg):	
+	print("[PROC] Publishing: "+Msg)
+	pub = rospy.Publisher(topic, String, queue_size=20)
+
+	pub.publish(Msg)
+	print("[PROC] Done")
+	
+def Seguimiento():
+	print "[PROC] Iniciando seguimiento"
+	while not status == "Hovering":
+		Publisher('Instruction',"takeoff")
+		time.sleep(1)
+		print "[PROC] Waiting for takeoff"
+	print "[PROC] Analizando imagen..."
+
+if __name__ == '__main__':
+        try:
+		rospy.init_node('Procesamiento')
+		#listener()
+		#Seguimiento()	
+		Test()     
+   	except rospy.ROSInterruptException:
+		pass
